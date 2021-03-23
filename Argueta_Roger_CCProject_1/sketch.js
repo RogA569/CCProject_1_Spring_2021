@@ -10,7 +10,7 @@ function setup() {
 function draw() {
 	background(255);
 	protagonist_shape.display();
-	//find a way to slow down this motion...
 	protagonist_shape.cannon_motion();
+	protagonist_shape.cannon_shoot();
 }
 
