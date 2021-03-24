@@ -14,12 +14,31 @@ class Shape {
 
 			this.cannon_move = 0;
 			this.cannonball_move = 0;
+
+			this.pink_or_light_mag = true; // bool switch for cb_fill
 		}
 	}
 
 	display() {
+		let cb_fill; // fill for every cannonball
+
+		if (this.pink_or_light_mag) {
+			cb_fill = color(255, 192, 203); // pink
+			this.pink_or_light_mag = false;
+		} else {
+			cb_fill = color(100, 100, 0);
+			this.pink_or_light_mag = true;
+		}
+
 		// make the base translation values (currently width/2, height/2) variable
-		// once cannonballs and their methods are set, put them before their cannon (so that they're "inside" the cannon)
+
+		// top cannon's cannonball
+		fill(cb_fill);
+		noStroke();
+		push();
+			translate(width/2 + this.triangle_c_x, height/2 + this.triangle_c_y);
+			ellipse(0, (15 - this.cannonball_move), 8, 8);
+		pop();
 
 		// top cannon
 		fill(0);
@@ -30,13 +49,13 @@ class Shape {
 			ellipse(0, (9 - this.cannon_move), 9, 3);
 		pop();
 
-		// top cannon's cannonball
-		// fill(pink);
-		fill(255, 0, 0);
+		// left cannon's cannonball
+		fill(cb_fill);
 		noStroke();
 		push();
-			translate(width/2 + this.triangle_c_x, height/2 + this.triangle_c_y);
-			ellipse(0, (15 - this.cannonball_move), 5, 5);
+			translate(width/2 + this.triangle_a_x, height/2 + this.triangle_a_y);
+			rotate(radians(-120));
+			ellipse(0, (15 - this.cannonball_move), 8, 8);
 		pop();
 
 		// left cannon
@@ -49,8 +68,14 @@ class Shape {
 			ellipse(0, (9 - this.cannon_move), 9, 3);
 		pop();
 
-		// left cannon's cannonball
-
+		// right cannon's cannonball
+		fill(cb_fill);
+		noStroke();
+		push();
+			translate(width/2 + this.triangle_b_x, height/2 + this.triangle_b_y);
+			rotate(radians(120));
+			ellipse(0, (15 - this.cannonball_move), 8, 8);
+		pop();
 
 		// right cannon
 		fill(0);
@@ -61,9 +86,6 @@ class Shape {
 			ellipse(0, (15 - this.cannon_move), 10, 10);
 			ellipse(0, (9 - this.cannon_move), 9, 3);
 		pop();
-
-		// right cannon's cannonball
-
 
 		// draw the shape (triangle)
 		push();
@@ -77,15 +99,14 @@ class Shape {
 			endShape(CLOSE);
 		pop();
 
-		// TESTING CANNONBALL
+		/*// TESTING CANNONBALL
 		// fill(pink);
 		fill(255, 0, 0);
 		noStroke();
 		push();
 			translate(width/2 + this.triangle_c_x, height/2 + this.triangle_c_y);
-			ellipse(0, (15 - this.cannonball_move), 7, 7);
-		pop();
-
+			ellipse(0, (15 - this.cannonball_move), 8.5, 8.5);
+		pop();*/
 	}
 
 	//create method that changes direction that triangle is moving/translating
@@ -103,11 +124,14 @@ class Shape {
 	}
 
 	cannon_shoot() {
-		// method which makes the cannons shoot a cannon ball
+		// method which makes the cannons shoot cannonballs
 		// if cannonball_move reaches a certain point, reset it
 		if (this.cannonball_move >= 20) {
-			this.cannonball_move += 8;
+			this.cannonball_move += 4;
 		}
+
+		//checkEdges(), for cannonballs
+		//if 
 	}
 
 }
