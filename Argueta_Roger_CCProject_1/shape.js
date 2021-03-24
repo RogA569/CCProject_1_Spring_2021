@@ -1,19 +1,25 @@
 class Shape {
 
+	// Add a counter: either accounting for # of times triangles bounce,
+	// or accounting for # of times cannonballs have shot.
+	// This counter will affect the gradation of the shape's fill from gray to pink to white.
+
+	// make the base translation values (currently width/2, height/2) variable
+
 	constructor(tc) {
 		//if (tc) { // circle
 			//
 		//}
 		if (tc != true) { // triangle
-			this.triangle_a_x = -50;
-			this.triangle_a_y =  50;
-			this.triangle_b_x = 50;
-			this.triangle_b_y = 50;
-			this.triangle_c_x = 0;
-			this.triangle_c_y = -25;
+			this.triangle_a_x = -50; // left vertex x
+			this.triangle_a_y =  50; // left vertex y
+			this.triangle_b_x = 50; // right vertex x
+			this.triangle_b_y = 50; // right vertex y
+			this.triangle_c_x = 0; // top vertex x
+			this.triangle_c_y = -25; // top vertex y
 
-			this.cannon_move = 0;
-			this.cannonball_move = 0;
+			this.cannon_move = 0; // shift value for cannons' (y) positions
+			this.cannonball_move = 0; // shift value for cannonballs' (y) positions
 
 			this.pink_or_light_mag = true; // bool switch for cb_fill
 		}
@@ -26,11 +32,9 @@ class Shape {
 			cb_fill = color(255, 192, 203); // pink
 			this.pink_or_light_mag = false;
 		} else {
-			cb_fill = color(100, 100, 0);
+			cb_fill = color(230, 230, 0); // yellow
 			this.pink_or_light_mag = true;
 		}
-
-		// make the base translation values (currently width/2, height/2) variable
 
 		// top cannon's cannonball
 		fill(cb_fill);
@@ -98,15 +102,6 @@ class Shape {
 				vertex(this.triangle_c_x, this.triangle_c_y);
 			endShape(CLOSE);
 		pop();
-
-		/*// TESTING CANNONBALL
-		// fill(pink);
-		fill(255, 0, 0);
-		noStroke();
-		push();
-			translate(width/2 + this.triangle_c_x, height/2 + this.triangle_c_y);
-			ellipse(0, (15 - this.cannonball_move), 8.5, 8.5);
-		pop();*/
 	}
 
 	//create method that changes direction that triangle is moving/translating
@@ -125,13 +120,27 @@ class Shape {
 
 	cannon_shoot() {
 		// method which makes the cannons shoot cannonballs
-		// if cannonball_move reaches a certain point, reset it
-		if (this.cannonball_move >= 20) {
+		if (this.cannonball_move >= 20) { // shoot when cannonball moves into position
 			this.cannonball_move += 4;
 		}
 
-		//checkEdges(), for cannonballs
-		//if 
+		if (this.cannonball_move > height/2) { // load a new cannonball (same cannonball)
+			this.cannonball_move = 20; // reset cannonball in the loaded position, 20 pixels from cannon/cannonball origin
+		}
+	}
+
+	triangle_shake(tc) { // need tc parameter to see if it's a triangle and then apply method
+		let vertex_shift = random(2, -2); // will shift all vertices by the same random value
+		if (tc != true) {
+			if (this.cannonball_move >= 25 && this.cannonball_move <= height/4) { // sometime between two cannonball (shot) positions
+				this.triangle_a_x += vertex_shift;
+				this.triangle_a_y += vertex_shift;
+				this.triangle_b_x += vertex_shift;
+				this.triangle_b_y += vertex_shift;
+				this.triangle_c_x += vertex_shift;
+				this.triangle_c_y += vertex_shift;
+			}
+		}
 	}
 
 }

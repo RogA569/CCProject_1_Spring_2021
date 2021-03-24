@@ -8,9 +8,10 @@ function setup() {
 }
 
 function draw() {
-	background(255);
+	background(192, 252, 255);
 	protagonist_shape.display();
 	protagonist_shape.cannon_motion();
 	protagonist_shape.cannon_shoot();
+	protagonist_shape.triangle_shake(triangle_or_circle);
 }
 
