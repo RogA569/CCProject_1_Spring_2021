@@ -11,7 +11,7 @@ function draw() {
 	background(192, 252, 255);
 	protagonist_shape.display();
 	protagonist_shape.cannon_motion();
-	protagonist_shape.cannon_shoot();
-	protagonist_shape.triangle_shake(triangle_or_circle);
+	protagonist_shape.cannon_shoot(4);
+	protagonist_shape.triangle_shake();
 }
 
