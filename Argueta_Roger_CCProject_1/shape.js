@@ -1,6 +1,6 @@
 class Shape {
 
-	constructor(tc_) { // takes in boolean parameter; true for circle, false for triangle
+	constructor(tc_) { //add an x_ and y_ parameter // takes in boolean parameter; true for circle, false for triangle
 		
 		this.tc = tc_; // make parameter into variable to change to true when program needs to
 
@@ -13,17 +13,17 @@ class Shape {
 		this.shape_fill = color('hsb('+ str(this.shape_fill_hsb[0]) + ', ' + str(this.shape_fill_hsb[1]) + '%, '+ str(this.shape_fill_hsb[2]) + '%)'); 
 
 		if (this.tc != true) { // triangle
-			this.triangle_a_x = -50; // left vertex x
-			this.triangle_a_y =  50; // left vertex y
-			this.triangle_b_x = 50; // right vertex x
-			this.triangle_b_y = 50; // right vertex y
-			this.triangle_c_x = 0; // top vertex x
-			this.triangle_c_y = -25; // top vertex y
+			this.triangle_a_x = -50; // change to whatever the x_ parameter is // left vertex x
+			this.triangle_a_y =  50; // change to whatever the y_ parameter is // left vertex y
+			this.triangle_b_x = 50; // change based on this.triangle_a_x // right vertex x
+			this.triangle_b_y = 50; // change based on this.triangle_a_x // right vertex y
+			this.triangle_c_x = 0; // change based on this.triangle_a_x // top vertex x
+			this.triangle_c_y = -25; // change based on this.triangle_a_x // top vertex y
 
 			this.cannon_move = 0; // shift value for cannons' (y) positions
 			this.cannonball_move = 0; // shift value for cannonballs' (y) positions
 
-			this.pink_or_light_mag = true; // bool switch for cb_fill
+			this.pink_or_white = true; // bool switch for cb_fill
 		}
 
 		/*if (this.tc) { // circle; perhaps user inputs tc_ as true
@@ -36,47 +36,30 @@ class Shape {
 		if (this.tc != true) {
 			let cb_fill; // fill for every cannonball
 
-			if (this.pink_or_light_mag) {
+			if (this.pink_or_white) {
 				cb_fill = color(255, 192, 203); // pink
-				this.pink_or_light_mag = false;
+				this.pink_or_white = false;
 			} else {
 				cb_fill = color(255, 255, 255); // white
-				this.pink_or_light_mag = true;
+				this.pink_or_white = true;
 			}
 
 			colorMode(RGB); // always start with RGB
-
-			// top cannon's cannonball
-			fill(cb_fill);
-			noStroke();
-			push();
-				translate(width/2 + this.triangle_c_x, height/2 + this.triangle_c_y);
-				ellipse(0, (15 - this.cannonball_move), 8, 8);
-			pop();
-
-			// top cannon
-			fill(0);
-			stroke(0);
-			push();
-				translate(width/2 + this.triangle_c_x, height/2 + this.triangle_c_y);
-				ellipse(0, (15 - this.cannon_move), 10, 10);
-				ellipse(0, (9 - this.cannon_move), 9, 3);
-			pop();
 
 			// left cannon's cannonball
 			fill(cb_fill);
 			noStroke();
 			push();
-				translate(width/2 + this.triangle_a_x, height/2 + this.triangle_a_y);
+				translate(width/2 + this.triangle_a_x, height/2 + this.triangle_a_y); // change to translation by this.triangle_a_x and y
 				rotate(radians(-120));
 				ellipse(0, (15 - this.cannonball_move), 8, 8);
 			pop();
 
 			// left cannon
-			fill(0);
+			fill(255, 255, 77);
 			stroke(0);
 			push();
-				translate(width/2 + this.triangle_a_x, height/2 + this.triangle_a_y);
+				translate(width/2 + this.triangle_a_x, height/2 + this.triangle_a_y); // change same as left cannonball
 				rotate(radians(-120));
 				ellipse(0, (15 - this.cannon_move), 10, 10);
 				ellipse(0, (9 - this.cannon_move), 9, 3);
@@ -86,17 +69,34 @@ class Shape {
 			fill(cb_fill);
 			noStroke();
 			push();
-				translate(width/2 + this.triangle_b_x, height/2 + this.triangle_b_y);
+				translate(width/2 + this.triangle_b_x, height/2 + this.triangle_b_y); // change to translation by this.triangle_b_x and y
 				rotate(radians(120));
 				ellipse(0, (15 - this.cannonball_move), 8, 8);
 			pop();
 
 			// right cannon
-			fill(0);
+			fill(255, 255, 77);
 			stroke(0);
 			push();
-				translate(width/2 + this.triangle_b_x, height/2 + this.triangle_b_y);
+				translate(width/2 + this.triangle_b_x, height/2 + this.triangle_b_y); // change same as right cannonball
 				rotate(radians(120));
+				ellipse(0, (15 - this.cannon_move), 10, 10);
+				ellipse(0, (9 - this.cannon_move), 9, 3);
+			pop();
+
+			// top cannon's cannonball
+			fill(cb_fill);
+			noStroke();
+			push();
+				translate(width/2 + this.triangle_c_x, height/2 + this.triangle_c_y); // change to translation by this.triangle_c_x and y
+				ellipse(0, (15 - this.cannonball_move), 8, 8);
+			pop();
+
+			// top cannon
+			fill(255, 255, 77);
+			stroke(0);
+			push();
+				translate(width/2 + this.triangle_c_x, height/2 + this.triangle_c_y); // change same as top cannonball
 				ellipse(0, (15 - this.cannon_move), 10, 10);
 				ellipse(0, (9 - this.cannon_move), 9, 3);
 			pop();
@@ -106,7 +106,7 @@ class Shape {
 				colorMode(HSB); //switch to HSB for following fill
 				fill(this.shape_fill);
 				stroke(0);
-				translate(width/2, height/2);
+				translate(width/2, height/2); // remove
 				beginShape();
 					vertex(this.triangle_a_x, this.triangle_a_y);
 					vertex(this.triangle_b_x, this.triangle_b_y);
@@ -118,12 +118,12 @@ class Shape {
 		if (this.tc) {
 			//draw the shape (circle)
 			push();
-				colorMode(HSB); //switch to HSB for following fill
+				colorMode(HSB); // switch to HSB for following fill
 				fill(this.shape_fill);
 				noStroke();
 
 				// will be in the general area of triangle; not exactly though
-				translate(width/2 + this.triangle_c_x, height/2 + (this.triangle_a_y - this.triangle_c_y)); 
+				translate(width/2 + this.triangle_c_x, height/2 + (this.triangle_a_y - this.triangle_c_y)); // remove width/2 and height/2
 
 				ellipse(this.ellipse_posX, this.ellipse_posY, 100, 100);
 			pop();
@@ -154,8 +154,9 @@ class Shape {
 				this.cannonball_move += pixel_distance;
 			}
 
-			// load a new cannonball (same cannonball); (height/1.25) to give cannonballs enough shooting distance
-			if (this.cannonball_move > (height/1.25)) { 
+			// load a new cannonball (same cannonball)
+			// (height/1.5) gives cannonballs shooting distance to cover canvas from anywhere
+			if (this.cannonball_move > (height/1.5)) { 
 				this.cannonballs_shot_counter++; // first increment counter
 				this.cannonball_move = 20; // reset cannonball in the loaded position, 20 pixels from cannon/cannonball origin
 			}
