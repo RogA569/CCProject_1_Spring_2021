@@ -151,8 +151,8 @@ class Shape {
 			}
 
 			// load a new cannonball (same cannonball)
-			// (height/1.5) gives cannonballs shooting distance to cover canvas from anywhere
-			if (this.cannonball_move > (height/1.5)) { 
+			// height gives cannonballs shooting distance to cover canvas from anywhere
+			if (this.cannonball_move > height) { 
 				this.cannonballs_shot_counter++; // first increment counter
 				this.cannonball_move = 20; // reset cannonball in the loaded position, 20 pixels from cannon/cannonball origin
 			}
