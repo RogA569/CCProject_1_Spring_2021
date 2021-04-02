@@ -1,6 +1,8 @@
 class Shape {
 
-	constructor(tc_) { //add an x_ and y_ parameter // takes in boolean parameter; true for circle, false for triangle
+	// takes in boolean parameter; true for circle, false for triangle
+	// also takes in an x and y parameter
+	constructor(tc_, x_, y_) { 
 		
 		this.tc = tc_; // make parameter into variable to change to true when program needs to
 
@@ -13,12 +15,12 @@ class Shape {
 		this.shape_fill = color('hsb('+ str(this.shape_fill_hsb[0]) + ', ' + str(this.shape_fill_hsb[1]) + '%, '+ str(this.shape_fill_hsb[2]) + '%)'); 
 
 		if (this.tc != true) { // triangle
-			this.triangle_a_x = -50; // change to whatever the x_ parameter is // left vertex x
-			this.triangle_a_y =  50; // change to whatever the y_ parameter is // left vertex y
-			this.triangle_b_x = 50; // change based on this.triangle_a_x // right vertex x
-			this.triangle_b_y = 50; // change based on this.triangle_a_x // right vertex y
-			this.triangle_c_x = 0; // change based on this.triangle_a_x // top vertex x
-			this.triangle_c_y = -25; // change based on this.triangle_a_x // top vertex y
+			this.triangle_a_x = x_; // left vertex x
+			this.triangle_a_y =  y_; // left vertex y
+			this.triangle_b_x = x_ + 100; // right vertex x
+			this.triangle_b_y = y_; // right vertex y
+			this.triangle_c_x = x_ + 50; // top vertex x
+			this.triangle_c_y = y_ - 75; // top vertex y
 
 			this.cannon_move = 0; // shift value for cannons' (y) positions
 			this.cannonball_move = 0; // shift value for cannonballs' (y) positions
@@ -50,7 +52,7 @@ class Shape {
 			fill(cb_fill);
 			noStroke();
 			push();
-				translate(width/2 + this.triangle_a_x, height/2 + this.triangle_a_y); // change to translation by this.triangle_a_x and y
+				translate(this.triangle_a_x, this.triangle_a_y);
 				rotate(radians(-120));
 				ellipse(0, (15 - this.cannonball_move), 8, 8);
 			pop();
@@ -59,7 +61,7 @@ class Shape {
 			fill(255, 255, 77);
 			stroke(0);
 			push();
-				translate(width/2 + this.triangle_a_x, height/2 + this.triangle_a_y); // change same as left cannonball
+				translate(this.triangle_a_x, this.triangle_a_y);
 				rotate(radians(-120));
 				ellipse(0, (15 - this.cannon_move), 10, 10);
 				ellipse(0, (9 - this.cannon_move), 9, 3);
@@ -69,7 +71,7 @@ class Shape {
 			fill(cb_fill);
 			noStroke();
 			push();
-				translate(width/2 + this.triangle_b_x, height/2 + this.triangle_b_y); // change to translation by this.triangle_b_x and y
+				translate(this.triangle_b_x, this.triangle_b_y);
 				rotate(radians(120));
 				ellipse(0, (15 - this.cannonball_move), 8, 8);
 			pop();
@@ -78,7 +80,7 @@ class Shape {
 			fill(255, 255, 77);
 			stroke(0);
 			push();
-				translate(width/2 + this.triangle_b_x, height/2 + this.triangle_b_y); // change same as right cannonball
+				translate(this.triangle_b_x, this.triangle_b_y);
 				rotate(radians(120));
 				ellipse(0, (15 - this.cannon_move), 10, 10);
 				ellipse(0, (9 - this.cannon_move), 9, 3);
@@ -88,7 +90,7 @@ class Shape {
 			fill(cb_fill);
 			noStroke();
 			push();
-				translate(width/2 + this.triangle_c_x, height/2 + this.triangle_c_y); // change to translation by this.triangle_c_x and y
+				translate(this.triangle_c_x, this.triangle_c_y);
 				ellipse(0, (15 - this.cannonball_move), 8, 8);
 			pop();
 
@@ -96,7 +98,7 @@ class Shape {
 			fill(255, 255, 77);
 			stroke(0);
 			push();
-				translate(width/2 + this.triangle_c_x, height/2 + this.triangle_c_y); // change same as top cannonball
+				translate(this.triangle_c_x, this.triangle_c_y);
 				ellipse(0, (15 - this.cannon_move), 10, 10);
 				ellipse(0, (9 - this.cannon_move), 9, 3);
 			pop();
@@ -106,7 +108,6 @@ class Shape {
 				colorMode(HSB); //switch to HSB for following fill
 				fill(this.shape_fill);
 				stroke(0);
-				translate(width/2, height/2); // remove
 				beginShape();
 					vertex(this.triangle_a_x, this.triangle_a_y);
 					vertex(this.triangle_b_x, this.triangle_b_y);
@@ -121,15 +122,10 @@ class Shape {
 				colorMode(HSB); // switch to HSB for following fill
 				fill(this.shape_fill);
 				noStroke();
-
-				// will be in the general area of triangle; not exactly though
-				translate(width/2 + this.triangle_c_x, height/2 + (this.triangle_a_y - this.triangle_c_y)); // remove width/2 and height/2
-
 				ellipse(this.ellipse_posX, this.ellipse_posY, 100, 100);
 			pop();
 			if (mouseIsPressed) { // if user presses mouse, circle rises up by 5 pixels
 				this.ellipse_posY -= 5;
-
 				this.shape_fill = color(255, 255, 255); // change to a white circle
 			}
 		} // end of (this.tc) if statement
@@ -165,8 +161,9 @@ class Shape {
 				this.tc = true;
 
 				// set initial x and y values for this new shape
-				this.ellipse_posX = 0;
-				this.ellipse_posY = 0;
+				// I've attempted to make somewhat close to the corresponding triangle (not exact though)
+				this.ellipse_posX = this.triangle_c_x;
+				this.ellipse_posY = (this.triangle_a_x - this.triangle_c_y);
 
 				this.cannonballs_shot_counter = 0; // reset to make this entire code block a one-time thing
 			}
@@ -188,9 +185,7 @@ class Shape {
 			}
 
 			if (this.cannonball_move >= height/4 && this.cannonball_move < (height/4 + 4)) { // this would be right after the triangle shakes
-				// increase brightness value of shape_fill so that it reaches max brightness
-				// when cannonballs_shot_counter reaches 9
-				this.shape_fill_hsb[2] += 50/9;
+				this.shape_fill_hsb[2] += 50/9; // increment allows brightness to reach 100 after 9 updates
 				this.shape_fill_hsb[2] = constrain(this.shape_fill_hsb[2], 50, 100); // constrain so it doesn't go past 100% brightness
 
 				//update

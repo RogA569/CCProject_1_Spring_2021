@@ -1,24 +1,26 @@
-// declare an array of shapes
-let triangle_or_circle;
-let protagonist_shape;
+let shapes; // an array of shapes
+let triangle_or_circle; // boolean value; false for triangle, true for circle
 
 function setup() {
 	createCanvas(900, 900);
 	triangle_or_circle = false;
-	// for every vertical space (randomly spaced out by at least 120 pixels)
-		// for every horizontal space (randomly spaced out by at least 100 pixels)
-			// create a new object of the Shape class (input for x/y parameters: specific horizontal space)
-			// push it to the array of shapes
-	protagonist_shape = new Shape(triangle_or_circle);
+	shapes = [];
+	for (let y = random(90, 115); y < height; y += random(120, 200)) { 
+		for (let x = random(20, 120); x < width; x += random(200, 350)) { 
+			let new_shape = new Shape(triangle_or_circle, x, y); // each shape has a random x and y
+			shapes.push(new_shape); // pushing each new shape to the array of shapes
+		}
+	}
 }
 
 function draw() {
 	background(192, 252, 255);
 	// for shape in array of shapes
-		protagonist_shape.display(); // change to display shape in array of shapes
-		protagonist_shape.cannon_motion(); // change similar to display()
-		// for every int (1-9)
-			protagonist_shape.cannon_shoot(4); // change similar to display(); change parameter to int
-		protagonist_shape.triangle_shake(); // change similar to display()
+	for (let shape = 0; shape < shapes.length; shape++) { // going through each shape in the array and calling the following
+		shapes[shape].display();
+		shapes[shape].cannon_motion();
+		shapes[shape].cannon_shoot(4);
+		shapes[shape].triangle_shake();
+	}
 }
 
