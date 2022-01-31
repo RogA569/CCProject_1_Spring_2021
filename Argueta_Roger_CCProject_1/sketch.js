@@ -1,3 +1,11 @@
+// Roger Argueta
+
+/* INSTRUCTIONS FOR NEXT ITERATION
+	Add touch screen functionality
+	To make circles rise, tap and hold anywhere on the screen
+	(may already be functional).
+*/
+
 let shapes; // an array of shapes
 let triangle_or_circle; // boolean value; false for triangle, true for circle
 
